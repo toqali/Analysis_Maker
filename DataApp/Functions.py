@@ -14,11 +14,19 @@ def read_file(uploaded_file):
     Returns:
     DataFrame: The contents of the uploaded file as a DataFrame.
     """
-    if uploaded_file.name.split(".")[-1] == "csv":
+    # Check the file type
+    if uploaded_file.name.endswith('.csv'):
         df = pd.read_csv(uploaded_file)
-    elif uploaded_file.name.split(".")[-1] == "json":
+        st.write("CSV file uploaded successfully.")
+    elif uploaded_file.name.endswith('.json'):
         df = pd.read_json(uploaded_file)
-    return df        
+        st.write("JSON file uploaded successfully.")
+    elif uploaded_file.name.endswith('.xlsx'):
+        df = pd.read_excel(uploaded_file, engine='openpyxl')
+        st.write("Excel file uploaded successfully.")
+    else:
+        st.write("Unsupported file format.")
+    return df      
 
 def create_card(title, value, index, cols):
     """
